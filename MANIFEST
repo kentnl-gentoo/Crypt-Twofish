@@ -1,0 +1,12 @@
+Changes
+MANIFEST
+Makefile.PL
+README
+Twofish.pm
+Twofish.xs
+_twofish.c
+twofish.h
+test.pl
+tab/misc.pl
+tab/tables.pl
+typemap

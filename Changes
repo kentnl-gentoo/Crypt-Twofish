@@ -1,0 +1,8 @@
+2.00    2001-05-01  (By Abhijit Menon-Sen <ams@wiw.org>)
+
+    * Complete rewrite. The module is now Crypt::CBC compatible, has new
+      test cases, and a cleaner Twofish implementation.
+
+0.01    1999-11-08  (By Nishant Kakani)
+
+    * original version; created by h2xs 1.16

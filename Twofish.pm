@@ -1,0 +1,154 @@
+# $Id: Twofish.pm,v 2.00 2001/04/29 23:15:55 ams Exp $
+# Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
+
+package Crypt::Twofish;
+
+use strict;
+use Carp;
+use DynaLoader;
+use vars qw( @ISA $VERSION );
+
+@ISA = qw( DynaLoader );
+($VERSION) = q$Revision: 2.00 $ =~ /([\d.]+)/;
+
+bootstrap Crypt::Twofish $VERSION;
+
+sub keysize   () { 16 }
+sub blocksize () { 16 }
+
+sub new
+{
+    my ($class, $key) = @_;
+
+    croak "Usage: ".__PACKAGE__."->new(\$key)" unless $key;
+
+    return Crypt::Twofish::setup($key);
+}
+
+sub encrypt
+{
+    my ($self, $data) = @_;
+
+    croak "Usage: \$two->encrypt(\$data)" unless ref($self) && $data;
+    $self->crypt($data, $data, 0);
+}
+
+sub decrypt
+{
+    my ($self, $data) = @_;
+
+    croak "Usage: \$two->decrypt(\$data)" unless ref($self) && $data;
+    $self->crypt($data, $data, 1);
+}
+
+# The functions below provide an interface that is call-compatible with
+# the Crypt::Twofish 1.0 module. They do not, however, behave in exactly
+# the same way: they don't pad keys, and cannot decrypt ciphertext which
+# was written by the old module.
+#
+# (This interface is deprecated. Please use the documented interface
+# instead).
+
+sub Encipher
+{
+    my ($key, $keylength, $plaintext) = @_;
+
+    require Crypt::CBC;
+    my $cipher = Crypt::CBC->new($key, "Twofish");
+    return $cipher->encrypt($plaintext);
+}
+
+sub Decipher
+{
+    my ($key, $keylength, $ciphertext, $cipherlength) = @_;
+
+    require Crypt::CBC;
+    my $cipher = Crypt::CBC->new($key, "Twofish");
+    return $cipher->decrypt($ciphertext);
+}
+
+sub LastError    { "";    }
+sub CheckTwofish { undef; }
+
+1;
+
+__END__
+
+=head1 NAME
+
+Crypt::Twofish - The Twofish Encryption Algorithm
+
+=head1 SYNOPSIS
+
+use Crypt::Twofish;
+
+$two = Crypt::Twofish->new($key);
+
+$ciphertext = $two->encrypt($plaintext);
+
+$plaintext  = $two->decrypt($ciphertext);
+
+=head1 DESCRIPTION
+
+Twofish is a 128-bit symmetric block cipher with a variable length (128,
+192, or 256-bit) key, developed by Counterpane Labs. It is unpatented
+and free for all uses, as described at
+<URL:http://www.counterpane.com/twofish.html>.
+
+This module implements Twofish encryption. It supports the Crypt::CBC
+interface, with the functions described below. It also provides an
+interface that is call-compatible with Crypt::Twofish 1.0, but its use
+is strongly discouraged.
+
+=head2 Functions
+
+=over
+
+=item blocksize
+
+Returns the size (in bytes) of the block (16, in this case).
+
+=item keysize
+
+Returns the size (in bytes) of the key. Although the module understands
+128, 192, and 256-bit keys, it returns 16 for compatibility with
+Crypt::CBC.
+
+=item new($key, $rounds)
+
+This creates a new Crypt::Twofish object with the specified key (which
+should be 16, 24, or 32 bytes long).
+
+=item encrypt($data)
+
+Encrypts blocksize() bytes of $data and returns the corresponding
+ciphertext.
+
+=item decrypt($data)
+
+Decrypts blocksize() bytes of $data and returns the corresponding
+plaintext.
+
+=back
+
+=head1 SEE ALSO
+
+Crypt::CBC, Crypt::Blowfish, Crypt::TEA
+
+=head1 ACKNOWLEDGEMENTS
+
+=over 4
+
+=item Nishant Kakani wrote the first version of Crypt::Twofish (this
+version is a complete reimplementation).
+
+=back
+
+=head1 AUTHOR
+
+Abhijit Menon-Sen <ams@wiw.org>
+
+Copyright 2001 Abhijit Menon-Sen. All rights reserved.
+
+This is free software; you may redistribute and/or modify it under the
+same terms as Perl itself.
