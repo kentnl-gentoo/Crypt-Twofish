@@ -1,5 +1,5 @@
 /*
- * $Id: _twofish.c,v 2.00 2001/04/29 23:15:55 ams Exp $
+ * $Id: _twofish.c,v 2.02 2001/05/04 08:10:37 ams Exp $
  * Copyright 1999 Dr. Brian Gladman <brian.gladman@btinternet.com>
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */

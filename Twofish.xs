@@ -1,17 +1,14 @@
 /*
- * $Id: Twofish.xs,v 2.00 2001/04/29 23:15:55 ams Exp $
+ * $Id: Twofish.xs,v 2.02 2001/05/04 08:10:37 ams Exp $
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
 
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#include "ppport.h"
 
 #include "twofish.h"
-
-#ifndef sv_undef
-#define sv_undef PL_sv_undef
-#endif
 
 typedef struct twofish * Crypt__Twofish;
 
@@ -53,7 +50,7 @@ twofish_crypt(self, input, output, decrypt)
         if (inlen != 16)
             croak("input must be 16 bytes long");
 
-        if (output == &sv_undef)
+        if (output == &PL_sv_undef)
             output = sv_newmortal();
         outlen = 16;
 

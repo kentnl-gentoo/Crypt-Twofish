@@ -5,6 +5,7 @@ README
 Twofish.pm
 Twofish.xs
 _twofish.c
+ppport.h
 twofish.h
 test.pl
 tab/misc.pl

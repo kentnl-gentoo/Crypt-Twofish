@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Id: tables.pl,v 2.00 2001/04/29 23:15:58 ams Exp $
+# $Id: tables.pl,v 2.02 2001/05/04 08:10:39 ams Exp $
 # Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
 
 use strict;

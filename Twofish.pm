@@ -1,4 +1,4 @@
-# $Id: Twofish.pm,v 2.00 2001/04/29 23:15:55 ams Exp $
+# $Id: Twofish.pm,v 2.02 2001/05/04 08:10:37 ams Exp $
 # Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
 
 package Crypt::Twofish;
@@ -9,7 +9,7 @@ use DynaLoader;
 use vars qw( @ISA $VERSION );
 
 @ISA = qw( DynaLoader );
-($VERSION) = q$Revision: 2.00 $ =~ /([\d.]+)/;
+($VERSION) = q$Revision: 2.02 $ =~ /([\d.]+)/;
 
 bootstrap Crypt::Twofish $VERSION;
 
@@ -21,7 +21,6 @@ sub new
     my ($class, $key) = @_;
 
     croak "Usage: ".__PACKAGE__."->new(\$key)" unless $key;
-
     return Crypt::Twofish::setup($key);
 }
 
@@ -29,7 +28,7 @@ sub encrypt
 {
     my ($self, $data) = @_;
 
-    croak "Usage: \$two->encrypt(\$data)" unless ref($self) && $data;
+    croak "Usage: \$cipher->encrypt(\$data)" unless ref($self) && $data;
     $self->crypt($data, $data, 0);
 }
 
@@ -37,7 +36,7 @@ sub decrypt
 {
     my ($self, $data) = @_;
 
-    croak "Usage: \$two->decrypt(\$data)" unless ref($self) && $data;
+    croak "Usage: \$cipher->decrypt(\$data)" unless ref($self) && $data;
     $self->crypt($data, $data, 1);
 }
 
@@ -82,11 +81,11 @@ Crypt::Twofish - The Twofish Encryption Algorithm
 
 use Crypt::Twofish;
 
-$two = Crypt::Twofish->new($key);
+$cipher = Crypt::Twofish->new($key);
 
-$ciphertext = $two->encrypt($plaintext);
+$ciphertext = $cipher->encrypt($plaintext);
 
-$plaintext  = $two->decrypt($ciphertext);
+$plaintext  = $cipher->decrypt($ciphertext);
 
 =head1 DESCRIPTION
 
@@ -114,7 +113,7 @@ Returns the size (in bytes) of the key. Although the module understands
 128, 192, and 256-bit keys, it returns 16 for compatibility with
 Crypt::CBC.
 
-=item new($key, $rounds)
+=item new($key)
 
 This creates a new Crypt::Twofish object with the specified key (which
 should be 16, 24, or 32 bytes long).
@@ -150,5 +149,5 @@ Abhijit Menon-Sen <ams@wiw.org>
 
 Copyright 2001 Abhijit Menon-Sen. All rights reserved.
 
-This is free software; you may redistribute and/or modify it under the
-same terms as Perl itself.
+This software is distributed under the terms of the Artistic License
+<URL:http://ams.wiw.org/code/artistic.txt>.
