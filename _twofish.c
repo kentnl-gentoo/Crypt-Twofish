@@ -1,5 +1,5 @@
 /*
- * $Id: _twofish.c,v 2.10 2001/05/07 07:17:33 ams Exp $
+ * $Id: _twofish.c,v 2.12 2001/05/21 17:38:01 ams Exp $
  * Copyright 1999 Dr. Brian Gladman <brian.gladman@btinternet.com>
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
@@ -197,26 +197,26 @@ void twofish_free(struct twofish *self)
 
    For efficiency, two rounds are combined into one in the macros below. */
 
-#define f_2rounds(i)                                \
-    t0   = g0(R[0]);                                \
-    t1   = g1(R[1]);                                \
-    R[2] = ror(R[2] ^ (t0 + t1 + K[4*i+8]), 1);     \
-    R[3] = rol(R[3], 1) ^ (t0 + 2*t1 + K[4*i+9]);   \
-    t0   = g0(R[2]);                                \
-    t1   = g1(R[3]);                                \
-    R[0] = ror(R[0] ^ (t0 + t1 + K[4*i+10]), 1);    \
-    R[1] = rol(R[1], 1) ^ (t0 + 2*t1 + K[4*i+11]);
+#define f_2rounds(i)                                    \
+    t0   = g0(R[0]);                                    \
+    t1   = g1(R[1]);                                    \
+    R[2] = ror(R[2] ^ (t0 + t1 + t->K[4*i+8]), 1);      \
+    R[3] = rol(R[3], 1) ^ (t0 + 2*t1 + t->K[4*i+9]);    \
+    t0   = g0(R[2]);                                    \
+    t1   = g1(R[3]);                                    \
+    R[0] = ror(R[0] ^ (t0 + t1 + t->K[4*i+10]), 1);     \
+    R[1] = rol(R[1], 1) ^ (t0 + 2*t1 + t->K[4*i+11]);
 
 /* This is the inverse of f_2rounds */
-#define i_2rounds(i)                                \
-    t0   = g0(R[0]);                                \
-    t1   = g1(R[1]);                                \
-    R[2] = rol(R[2], 1) ^ (t0 + t1 + K[4*i+10]);    \
-    R[3] = ror(R[3] ^ (t0 + 2*t1 + K[4*i+11]), 1);  \
-    t0   = g0(R[2]);                                \
-    t1   = g1(R[3]);                                \
-    R[0] = rol(R[0], 1) ^ (t0 + t1 + K[4*i+8]);     \
-    R[1] = ror(R[1] ^ (t0 + 2*t1 + K[4*i+9]), 1)
+#define i_2rounds(i)                                    \
+    t0   = g0(R[0]);                                    \
+    t1   = g1(R[1]);                                    \
+    R[2] = rol(R[2], 1) ^ (t0 + t1 + t->K[4*i+10]);     \
+    R[3] = ror(R[3] ^ (t0 + 2*t1 + t->K[4*i+11]), 1);   \
+    t0   = g0(R[2]);                                    \
+    t1   = g1(R[3]);                                    \
+    R[0] = rol(R[0], 1) ^ (t0 + t1 + t->K[4*i+8]);      \
+    R[1] = ror(R[1] ^ (t0 + 2*t1 + t->K[4*i+9]), 1)
 
 /* This function encrypts or decrypts 16 bytes of input data and writes
    it to output, using the key defined in t. */
@@ -225,40 +225,37 @@ void twofish_crypt(struct twofish *t,
                    unsigned char *input, unsigned char *output,
                    int decrypt)
 {
-    uint32_t t0, t1, R[4], out[4], *K, **S;
-
-    K = t->K;
-    S = (uint32_t **)t->S;
+    uint32_t t0, t1, R[4], out[4];
 
     if (!decrypt) {
         /* Whiten four 32-bit input words. */
-        R[0] = K[0] ^ strtonl(input);
-        R[1] = K[1] ^ strtonl(input+4);
-        R[2] = K[2] ^ strtonl(input+8);
-        R[3] = K[3] ^ strtonl(input+12);
+        R[0] = t->K[0] ^ strtonl(input);
+        R[1] = t->K[1] ^ strtonl(input+4);
+        R[2] = t->K[2] ^ strtonl(input+8);
+        R[3] = t->K[3] ^ strtonl(input+12);
 
         /* 16 rounds of encryption, combined into 8 pairs. */
         f_2rounds(0); f_2rounds(1); f_2rounds(2); f_2rounds(3);
         f_2rounds(4); f_2rounds(5); f_2rounds(6); f_2rounds(7);
 
         /* Output whitening; The order of R[n] undoes the last swap. */
-        out[0] = K[4] ^ R[2];
-        out[1] = K[5] ^ R[3];
-        out[2] = K[6] ^ R[0];
-        out[3] = K[7] ^ R[1];
+        out[0] = t->K[4] ^ R[2];
+        out[1] = t->K[5] ^ R[3];
+        out[2] = t->K[6] ^ R[0];
+        out[3] = t->K[7] ^ R[1];
     } else {
-        R[0] = K[4] ^ strtonl(input);
-        R[1] = K[5] ^ strtonl(input+4);
-        R[2] = K[6] ^ strtonl(input+8);
-        R[3] = K[7] ^ strtonl(input+12);
+        R[0] = t->K[4] ^ strtonl(input);
+        R[1] = t->K[5] ^ strtonl(input+4);
+        R[2] = t->K[6] ^ strtonl(input+8);
+        R[3] = t->K[7] ^ strtonl(input+12);
 
         i_2rounds(7); i_2rounds(6); i_2rounds(5); i_2rounds(4);
         i_2rounds(3); i_2rounds(2); i_2rounds(1); i_2rounds(0);
 
-        out[0] = K[0] ^ R[2];
-        out[1] = K[1] ^ R[3];
-        out[2] = K[2] ^ R[0];
-        out[3] = K[3] ^ R[1];
+        out[0] = t->K[0] ^ R[2];
+        out[1] = t->K[1] ^ R[3];
+        out[2] = t->K[2] ^ R[0];
+        out[3] = t->K[3] ^ R[1];
     }
 
     /* Write 16 output bytes. */

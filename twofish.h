@@ -1,5 +1,5 @@
 /*
- * $Id: twofish.h,v 2.10 2001/05/07 07:17:33 ams Exp $
+ * $Id: twofish.h,v 2.12 2001/05/21 17:38:01 ams Exp $
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
 

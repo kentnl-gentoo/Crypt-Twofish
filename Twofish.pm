@@ -1,4 +1,4 @@
-# $Id: Twofish.pm,v 2.10 2001/05/07 07:17:33 ams Exp $
+# $Id: Twofish.pm,v 2.12 2001/05/21 17:38:01 ams Exp $
 # Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
 
 package Crypt::Twofish;
@@ -9,7 +9,7 @@ use DynaLoader;
 use vars qw( @ISA $VERSION );
 
 @ISA = qw( DynaLoader );
-($VERSION) = q$Revision: 2.10 $ =~ /([\d.]+)/;
+($VERSION) = q$Revision: 2.12 $ =~ /([\d.]+)/;
 
 bootstrap Crypt::Twofish $VERSION;
 
@@ -97,7 +97,7 @@ and free for all uses, as described at
 This module implements Twofish encryption. It supports the Crypt::CBC
 interface, with the functions described below. It also provides an
 interface that is call-compatible with Crypt::Twofish 1.0, but its use
-is strongly discouraged.
+in new code is strongly discouraged.
 
 =head2 Functions
 

@@ -1,3 +1,7 @@
+2.12    2001-05-21
+
+    * More Makefile.PL feature-probing updates.
+
 2.10    2001-05-07
 
     * Makefile.PL now tries to do the right thing on systems which don't
@@ -13,6 +17,6 @@
     * Complete rewrite. The module is now Crypt::CBC compatible, has new
       test cases, and a cleaner Twofish implementation.
 
-0.01    1999-11-08  (By Nishant Kakani)
+1.00    1999-11-08  (By Nishant Kakani)
 
     * original version; created by h2xs 1.16
