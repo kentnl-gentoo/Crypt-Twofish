@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# $Id: tables.pl,v 2.02 2001/05/04 08:10:39 ams Exp $
+# $Id: tables.pl,v 2.10 2001/05/07 07:17:36 ams Exp $
 # Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
 
 use strict;
@@ -76,8 +76,8 @@ my @m = map { join ",\n", indent(1, cwrap(76, @$_)) } @$mtab;
 |    * the next time "make tables.h" is run.
 |    */
 |
-|   #ifndef _TABLES_H_
-|   #define _TABLES_H_
+|   #ifndef _TWOFISH_TABLES_H_
+|   #define _TWOFISH_TABLES_H_
 |
 |   unsigned char q[2][256] = {
 |   {

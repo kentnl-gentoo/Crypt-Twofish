@@ -6,8 +6,8 @@ Twofish.pm
 Twofish.xs
 _twofish.c
 ppport.h
-twofish.h
-test.pl
 tab/misc.pl
 tab/tables.pl
+test.pl
+twofish.h
 typemap

@@ -1,5 +1,5 @@
 /*
- * $Id: _twofish.c,v 2.02 2001/05/04 08:10:37 ams Exp $
+ * $Id: _twofish.c,v 2.10 2001/05/07 07:17:33 ams Exp $
  * Copyright 1999 Dr. Brian Gladman <brian.gladman@btinternet.com>
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
@@ -41,6 +41,9 @@
         *(s+2)=(unsigned char)((l) >> 16);  \
         *(s+3)=(unsigned char)((l) >> 24);  \
     } while (0)
+
+static uint32_t mds_rem(uint32_t a, uint32_t b);
+static uint32_t h(int len, const int x, unsigned char *key, int odd);
 
 /* The key schedule takes a 128, 192, or 256-bit key, and provides 40
    32-bit words of expanded key K0,...,K39 and the 4 key-dependent
@@ -152,6 +155,11 @@ struct twofish *twofish_setup(unsigned char *key, int len)
     }
 
     return t;
+}
+
+void twofish_free(struct twofish *self)
+{
+    free(self);
 }
 
 /* The function g splits the input word x into four bytes; each byte is

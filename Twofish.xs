@@ -1,5 +1,5 @@
 /*
- * $Id: Twofish.xs,v 2.02 2001/05/04 08:10:37 ams Exp $
+ * $Id: Twofish.xs,v 2.10 2001/05/07 07:17:33 ams Exp $
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
 
@@ -34,7 +34,7 @@ void
 twofish_DESTROY(self)
     Crypt::Twofish self
     CODE:
-        free(self);
+        twofish_free(self);
 
 void
 twofish_crypt(self, input, output, decrypt)

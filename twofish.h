@@ -1,15 +1,13 @@
 /*
- * $Id: twofish.h,v 2.02 2001/05/04 08:10:37 ams Exp $
+ * $Id: twofish.h,v 2.10 2001/05/07 07:17:33 ams Exp $
  * Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
  */
 
 #include <stdlib.h>
+#include "platform.h"
 
-#ifdef WIN32
-typedef unsigned long uint32_t;
-#else
-#include <inttypes.h>
-#endif
+#ifndef _TWOFISH_H_
+#define _TWOFISH_H_
 
 struct twofish {
     int len;                    /* Key length in 64-bit units: 2, 3 or 4 */
@@ -18,8 +16,9 @@ struct twofish {
 };
 
 struct twofish *twofish_setup(unsigned char *key, int len);
+void twofish_free(struct twofish *self);
 void twofish_crypt(struct twofish *t,
                    unsigned char *input, unsigned char *output,
                    int decrypt);
-static uint32_t mds_rem(uint32_t a, uint32_t b);
-static uint32_t h(int len, const int x, unsigned char *key, int odd);
+
+#endif

@@ -1,4 +1,4 @@
-# $Id: Twofish.pm,v 2.02 2001/05/04 08:10:37 ams Exp $
+# $Id: Twofish.pm,v 2.10 2001/05/07 07:17:33 ams Exp $
 # Copyright 2001 Abhijit Menon-Sen <ams@wiw.org>
 
 package Crypt::Twofish;
@@ -9,7 +9,7 @@ use DynaLoader;
 use vars qw( @ISA $VERSION );
 
 @ISA = qw( DynaLoader );
-($VERSION) = q$Revision: 2.02 $ =~ /([\d.]+)/;
+($VERSION) = q$Revision: 2.10 $ =~ /([\d.]+)/;
 
 bootstrap Crypt::Twofish $VERSION;
 
@@ -138,8 +138,14 @@ Crypt::CBC, Crypt::Blowfish, Crypt::TEA
 
 =over 4
 
-=item Nishant Kakani wrote the first version of Crypt::Twofish (this
-version is a complete reimplementation).
+=item Nishant Kakani
+
+For writing Crypt::Twofish 1.0 (this version is a complete rewrite).
+
+=item Tony Cook
+
+For making the module work under Activeperl, testing on several
+platforms, and suggesting that I probe for features via %Config.
 
 =back
 

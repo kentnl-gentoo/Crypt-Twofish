@@ -4,11 +4,11 @@ NAME
 SYNOPSIS
     use Crypt::Twofish;
 
-    $two = Crypt::Twofish->new($key);
+    $cipher = Crypt::Twofish->new($key);
 
-    $ciphertext = $two->encrypt($plaintext);
+    $ciphertext = $cipher->encrypt($plaintext);
 
-    $plaintext = $two->decrypt($ciphertext);
+    $plaintext = $cipher->decrypt($ciphertext);
 
 DESCRIPTION
     Twofish is a 128-bit symmetric block cipher with a variable
@@ -31,7 +31,7 @@ DESCRIPTION
         understands 128, 192, and 256-bit keys, it returns 16 for
         compatibility with Crypt::CBC.
 
-    new($key, $rounds)
+    new($key)
         This creates a new Crypt::Twofish object with the specified
         key (which should be 16, 24, or 32 bytes long).
 
@@ -47,13 +47,19 @@ SEE ALSO
     Crypt::CBC, Crypt::Blowfish, Crypt::TEA
 
 ACKNOWLEDGEMENTS
-    Nishant Kakani wrote the first version of Crypt::Twofish (this
-    version is a complete reimplementation).
+    Nishant Kakani
+        For writing Crypt::Twofish 1.0 (this version is a complete
+        rewrite).
+
+    Tony Cook
+        For making the module work under Activeperl, testing on
+        several platforms, and suggesting that I probe for features
+        via %Config.
 
 AUTHOR
     Abhijit Menon-Sen <ams@wiw.org>
 
     Copyright 2001 Abhijit Menon-Sen. All rights reserved.
 
-    This software is distributed under the terms of the Artistic License
-    <URL:http://ams.wiw.org/code/artistic.txt>.
+    This software is distributed under the terms of the Artistic
+    License <URL:http://ams.wiw.org/code/artistic.txt>.
