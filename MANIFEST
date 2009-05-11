@@ -11,3 +11,4 @@ tab/tables.pl
 test.pl
 twofish.h
 typemap
+META.yml                                 Module meta-data (added by MakeMaker)
