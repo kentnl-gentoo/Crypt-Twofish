@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Crypt-Twofish
-version:            2.14
+version:            2.15
 abstract:           The Twofish Encryption Algorithm
 author:  []
 license:            unknown
@@ -9,7 +9,8 @@ configure_requires:
     ExtUtils::MakeMaker:  0
 build_requires:
     ExtUtils::MakeMaker:  0
-requires:  {}
+requires:
+    strict:  0
 no_index:
     directory:
         - t
