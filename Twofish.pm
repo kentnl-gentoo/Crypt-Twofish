@@ -6,15 +6,12 @@ package Crypt::Twofish;
 use strict;
 use Carp;
 use DynaLoader;
-use vars qw( @ISA $VERSION $XS_VERSION );
+use vars qw( @ISA $VERSION );
 
 @ISA = qw( DynaLoader );
-$VERSION = '2.16_001';
-$XS_VERSION = $VERSION;
-$VERSION = eval $VERSION;
+$VERSION = '2.17';
 
-
-bootstrap Crypt::Twofish $XS_VERSION;
+bootstrap Crypt::Twofish $VERSION;
 
 sub keysize   () { 16 }
 sub blocksize () { 16 }

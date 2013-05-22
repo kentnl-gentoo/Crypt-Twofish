@@ -1,6 +1,3 @@
-2.16_001 2013-05-21 David Oswald (Unauthorized 'dev' release)
-    * Fix Sv_UPGRADE bug that prevents install on Perl 5.18.
-
 2.16    2013-04-10      Abhijit Menon-Sen <ams@toroid.org>
 
     * Another attempt to silence cpantesters. No functional changes.
